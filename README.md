@@ -1,5 +1,3 @@
-# MemGroup_ModOP
-
 <h2> Class project creating a memory module for an Operating system </h2>
 
 <h4> Objectives of the group are as follows </h4>
