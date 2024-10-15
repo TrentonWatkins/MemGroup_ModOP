@@ -8,6 +8,7 @@
     * Communication to and from the Process Management and CPU modules 
 
 <h2> Our Team </h2>
+
 * Alex Dieffenbach - Team Leader, Junior Programmer, MS PowerPoint aficionado
 * Benjamin Hagerich - Junior Programmer, Hype Man, Track Star
 * Trenton Watkins - Senior Programmer, Hunk, Indentured Servant to Dr. Azab
