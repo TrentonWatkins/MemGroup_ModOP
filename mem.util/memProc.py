@@ -1,16 +1,9 @@
 # Single mem process - one of the three that would run at the same time
 
 # Fully define what memory process needs
-#   Page(s), command queue, priority, etc
+#   Page(s), command queue, etc
 class MemoryProc:
-    def __init__(self,pross, priority):
-        self.priority = null;
-        if priority == 1:
-            priProc(pross)
-        if priority == 2:
-            secProc(pross)
-        else:
-            terProc(pross)
+    def __init__(self,pross):
 # netCodesocets ports to listen to 99887 from storage 
 #send to process management 
 #create impliment interfaces for pages and index so subclasses can inhearet traits

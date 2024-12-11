@@ -1,1 +1,4 @@
-
+TODOs:
+- Test file reception and transmission 
+- Test file format parsing from storage and process management
+- Program needs to be constantly listening on (Process Management Port) to translate data requests to the (Storage Management Port)
