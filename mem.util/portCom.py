@@ -4,7 +4,19 @@ import threading
 
 
 # Server setup function to handle incoming connections and file/text transfer
-def server_mode(host='0.0.0.0', port=12345):
+def server_mode(host='0.0.0.0'):
+
+    group = input("Receiving from storage or process? (storage/process): ").strip().lower()
+    
+    # Opened port will depend on the group sending the file
+    if group == "storage":
+        port = 99887
+    elif group == "process":
+        port = 1629
+    else:
+        # Handle invalid input
+        print("Invalid group. Please enter 'storage' or 'process'.")
+
     # Create a TCP socket for the server
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
@@ -15,7 +27,7 @@ def server_mode(host='0.0.0.0', port=12345):
     server_socket.listen(1)
     print(f"Server listening on {host}:{port}")
 
-    # Function to handle receiving a file
+    # Function to handle receiving a file FROM STORAGE
     def receive_file(connection):
         # Receive the file name and size
         file_name = connection.recv(1024).decode()
@@ -31,7 +43,7 @@ def server_mode(host='0.0.0.0', port=12345):
                 received += len(data)
         print(f"File {file_name} received successfully.")
 
-    # Function to handle receiving a text message
+    # Function to handle receiving a text message FROM PROCESS
     def receive_text(connection):
         # Receive the text message
         text = connection.recv(1024).decode()
@@ -55,14 +67,26 @@ def server_mode(host='0.0.0.0', port=12345):
         conn.close()
 
 # Client setup function to send text or file to the server
-def client_mode(server_ip, server_port=12345):
+def client_mode(server_ip):
+
+    group = input("Sending to storage or process? (storage/process): ").strip().lower()
+    
+    # Server port will depend on the group receiving the file/text
+    if group == "storage":
+        server_port = 12345
+    elif group == "process":
+        server_port = 54321
+    else:
+        # Handle invalid input
+        print("Invalid group. Please enter 'storage' or 'process'.")
+
     # Create a TCP socket for the client
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
     # Connect to the server at the provided IP and port
     client_socket.connect((server_ip, server_port))
 
-    # Function to send a text message to the server
+    # Function to send a text message TO STORAGE
     def send_text(text):
         # Indicate that the data type is 'text'
         client_socket.sendall(b'text')
@@ -71,7 +95,7 @@ def client_mode(server_ip, server_port=12345):
         client_socket.sendall(text.encode())
         print(f"Sent text: {text}")
 
-    # Function to send a file to the server
+    # Function to send a file to PROCESS 
     def send_file(file_path):
         # Indicate that the data type is 'file'
         client_socket.sendall(b'file')
