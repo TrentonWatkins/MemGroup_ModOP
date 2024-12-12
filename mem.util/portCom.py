@@ -2,7 +2,11 @@ import os
 import socket
 import threading
 
+import priProc
 
+memory_heap1 = []
+memory_heap2 = []
+memory_heap3 = []
 # Server setup function to handle incoming connections and file/text transfer
 def server_mode(host='0.0.0.0'):
 
@@ -42,12 +46,14 @@ def server_mode(host='0.0.0.0'):
                 file.write(data)
                 received += len(data)
         print(f"File {file_name} received successfully.")
+        priProc.replaceMemBlock(memory_heap1, file_name)
 
     # Function to handle receiving a text message FROM PROCESS
     def receive_text(connection):
         # Receive the text message
         text = connection.recv(1024).decode()
         print(f"Received text: {text}")
+        priProc.replaceMemBlock(memory_heap1, text)
 
     while True:
         # Accept an incoming connection from a client
