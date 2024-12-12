@@ -1,17 +1,29 @@
-# Single mem process - one of the three that would run at the same time
+import subprocess
+import time
 
-# Fully define what memory process needs
-#   Page(s), command queue, etc
-class MemoryProc:
-    def __init__(self,pross):
-# netCodesocets ports to listen to 99887 from storage 
-#send to process management 
-#create impliment interfaces for pages and index so subclasses can inhearet traits
+import priProc
 
-    #TODO:Private Heap:
-    #Python manages memory through a private heap, which is a portion of memory dedicated to the Python process.
-    # This heap contains all Python objects and data structures -Trenton
-    import heapq
 
-    #TODO:The mmap module allows you to map a file or a portion of it directly into memory.
-    # This can be useful for working with large files efficiently or for interfacing with shared memory. - Alex 
+def run_portCom():
+    """Run the portCom.py script."""
+    print("Running portCom.py...")
+    subprocess.run(["python", "portCom.py"], check=True)
+
+
+
+if __name__ == "__main__":
+    try:
+        # Run the scripts in the specified order
+        memory_heap1 = []
+        priProc.addMemBlock(memory_heap1, "emptyBlock")
+        priProc.addMemBlock(memory_heap1, "emptyBlock")
+        priProc.addMemBlock(memory_heap1, "emptyBlock")
+        priProc.addMemBlock(memory_heap1, "emptyBlock")
+        priProc.addMemBlock(memory_heap1, "emptyBlock")
+        run_portCom()
+    except Exception as e:
+        print(f"An error occurred while running the scripts: {e}")
+
+
+
+
