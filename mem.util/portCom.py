@@ -14,7 +14,7 @@ def server_mode(host='0.0.0.0'):
     
     # Opened port will depend on the group sending the file
     if group == "storage":
-        port = 99887
+        port = 65530
     elif group == "process":
         port = 1629
     else:
@@ -46,7 +46,9 @@ def server_mode(host='0.0.0.0'):
                 file.write(data)
                 received += len(data)
         print(f"File {file_name} received successfully.")
+        print(f"Writing file to memory...")
         priProc.replaceMemBlock(memory_heap1, file_name)
+        print(f"File successfully written!")
 
     # Function to handle receiving a text message FROM PROCESS
     def receive_text(connection):
@@ -73,19 +75,7 @@ def server_mode(host='0.0.0.0'):
         conn.close()
 
 # Client setup function to send text or file to the server
-def client_mode(server_ip):
-
-    group = input("Sending to storage or process? (storage/process): ").strip().lower()
-    
-    # Server port will depend on the group receiving the file/text
-    if group == "storage":
-        server_port = 12345
-    elif group == "process":
-        server_port = 54321
-    else:
-        # Handle invalid input
-        print("Invalid group. Please enter 'storage' or 'process'.")
-
+def client_mode(server_ip, server_port):
     # Create a TCP socket for the client
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
@@ -143,7 +133,8 @@ def start_bidirectional():
         server_mode()
     elif mode == "client":
         server_ip = input("Enter the server IP address: ").strip()
-        client_mode(server_ip)
+        server_port = int(input("Enter the port (0-65535): ").strip())
+        client_mode(server_ip, server_port)
     else:
         # Handle invalid input
         print("Invalid mode. Please enter 'server' or 'client'.")
